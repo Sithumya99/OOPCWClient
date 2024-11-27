@@ -1,0 +1,17 @@
+<h1>Welcome to the ticketing app!</h1>
+
+<div class="login-form">
+    <p>Username</p> <input type="text" name="username" id="" (input)="saveChanges($event)"/>
+    <p>Password</p> <input type="password" name="password" id="" (input)="saveChanges($event)"/> <br/>
+</div>
+
+<div *ngIf="isLogin" class="login-buttons">
+    <button (click)="loginUser()">Login</button>
+    <p>No account?</p> <button (click)="toglleForm()">Register</button>
+</div>
+
+<div *ngIf="!isLogin" class="login-buttons">
+    <button>Register as Customer</button>
+    <button>Register as Vendor</button>
+    <p>Already have an account?</p> <button (click)="toglleForm()">Login</button>
+</div>

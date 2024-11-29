@@ -16,3 +16,8 @@ export enum pages {
     vendorTicketspage,
     loginPage
 }
+
+export interface ticket {
+    eventName: string;
+    price: number;
+}

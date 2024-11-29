@@ -47,7 +47,7 @@ export class CommandImplementation {
                 navCmds = [ticketpool];
                 break;
             case "Vendor":
-                navCmds = [ticketpool, addticket];
+                navCmds = [ticketpool, addticket, vendorTickets];
                 break;
             default:
                 break;

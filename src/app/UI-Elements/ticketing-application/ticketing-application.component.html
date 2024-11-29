@@ -1,13 +1,13 @@
-<app-ticketing-login *ngIf="{{currentPage == pages.loginPage}}"></app-ticketing-login>
+<app-ticketing-login *ngIf="currentPage == pageEnum.loginPage"></app-ticketing-login>
 
-<div class="ticket-app" *ngIf="{{currentPage !== pages.loginPage}}">
+<div class="ticket-app" *ngIf="currentPage !== pageEnum.loginPage">
 
     <div class="nav">
         <app-ticketing-navbar></app-ticketing-navbar>
     </div>
 
     <div class="pages">
-        <app-ticketing-ticketpool *ngIf="{{currentPage !== pages.ticketPoolPage}}"></app-ticketing-ticketpool>
+        <app-ticketing-ticketpool *ngIf="currentPage == pageEnum.ticketPoolPage"></app-ticketing-ticketpool>
     </div>
 
 </div>

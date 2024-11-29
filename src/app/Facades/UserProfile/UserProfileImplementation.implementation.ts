@@ -4,6 +4,7 @@ import { BasicdataFacade } from "../Basicdata/BasicdataFacade.facade";
 import { CommunicationService } from "../../Services/CommunicationService.service";
 import { pages, userLoginRequest } from "../../Interfaces/BasicData.interface";
 import { CommandFacade } from "../Commands/CommandFacade.facade";
+import { UserProfileFacade } from "./UserProfileFacade.facade";
 
 export class UserProfileImplementation {
     private authToken: string | undefined;
@@ -46,8 +47,8 @@ export class UserProfileImplementation {
             CommunicationService.http.postFromTicketServer("login", this.userLoginDetails).subscribe(
                 async (result) => {
                     this.user = new UserProfile(result.username, result.role);
-                    BasicdataFacade.setCurrentPage(pages.ticketPoolPage);
-                    CommandFacade.loadCommands();
+                    UserProfileFacade.setAuth(result.token);
+                    BasicdataFacade.loadTicketApp();
                     resolve(result);
                     console.log(result);
                 },

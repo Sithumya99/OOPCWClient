@@ -1,13 +1,14 @@
 import { Component } from "@angular/core";
 import { CommandFacade } from "../../Facades/Commands/CommandFacade.facade";
 import { command } from "../../Interfaces/BasicData.interface";
+import { CommandComponent } from "../Command/Command.component";
+import { CommonModule } from "@angular/common";
 
 @Component({
     selector: 'app-ticketing-navbar',
     standalone: true,
-    imports: [],
     templateUrl: './ticketing-navbar.component.html',
-    styleUrl: ''
+    imports: [CommonModule, CommandComponent],
 })
 
 export class TicketingNavbarComponent {

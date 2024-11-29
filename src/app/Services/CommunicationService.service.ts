@@ -34,13 +34,34 @@ export class CommunicationService {
 
     postFromTicketServer(cmd: string, body: any): Observable<any> {
         const url = `${environment.url}/${cmd}`;
-        console.log("url: " + url);
         return this.post(url, body);
     }
 
+    getFromTicketServer(cmd: string): Observable<any> {
+        const url = `${environment.url}/${cmd}`;
+        return this.get(url);
+    }
+
     post(url: string, body: any): Observable<any> {
-        return this.httpClient.post<any>(`${url}`, body, {...this.httpOptions, observe: 'response'}).pipe(
+        return this.httpClient.post<any>(`${url}`, body, {...this.createHttpOptions(), observe: 'response'}).pipe(
             map(this.extractData)
         );
+    }
+
+    get(url: string): Observable<any> {
+        return this.httpClient.get<any>(`${url}`, {...this.createHttpOptions(), observe: 'response'}).pipe(
+            map(this.extractData)
+        );
+    }
+
+    createHttpOptions(): {headers: HttpHeaders} {
+        const userAuth = UserProfileFacade.getAuth();
+        let headers = this.httpOptions.headers;
+
+        if (userAuth) {
+            headers = headers.set('Authorization', `Bearer ${userAuth}`);
+        }
+
+        return { headers };
     }
 }

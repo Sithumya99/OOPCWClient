@@ -1,3 +1,6 @@
-<div class="navigation">
-    <div class="commands"></div>
+<div *ngFor="let command of navbarCommands">
+    <app-command
+        [command]="command"
+    >
+    </app-command>
 </div>

@@ -9,17 +9,17 @@ import { CommonModule } from "@angular/common";
 @Component({
     selector: 'app-ticketing-application',
     imports: [
+        CommonModule,
         TicketPoolComponent,
         TicketingLoginComponent,
-        TicketingNavbarComponent,
-        CommonModule
+        TicketingNavbarComponent
     ],
     templateUrl: './ticketing-application.component.html',
     standalone: true,
-    styleUrl: ''
 })
 
 export class TicketingApplication {
+    pageEnum  = pages;
     currentPage: pages = pages.loginPage;
 
     constructor() {

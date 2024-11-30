@@ -1,0 +1,7 @@
+<div class="ticket">
+    <h1>{{ticket.eventName}}</h1>
+    <p>{{ticket.price}}</p>
+    <div *ngIf="showBuyTicket()">
+        <button (click)="buyTicket()">Buy Ticket</button>
+    </div>
+</div>

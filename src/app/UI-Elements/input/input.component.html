@@ -1,0 +1,13 @@
+<div *ngFor="let field of fields">
+    <div *ngIf="isTextField(field)">
+        <p>{{field.label}}</p> <input type="text" name="{{field.name}}" id="" (input)="saveChanges($event, field)"/>
+    </div>
+
+    <div *ngIf="isPasswordField(field)">
+        <p>{{field.label}}</p> <input type="password" name="{{field.name}}" id="" (input)="saveChanges($event, field)">
+    </div>
+
+    <div *ngIf="isNumberField(field)">
+        <p>{{field.label}}</p> <input type="number" name="{{field.name}}" id="" (input)="saveChanges($event, field)">
+    </div>
+</div>

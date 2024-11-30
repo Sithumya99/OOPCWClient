@@ -5,6 +5,9 @@ import { TicketingNavbarComponent } from "../ticketing-navbar/ticketing-navbar.c
 import { pages } from "../../Interfaces/BasicData.interface";
 import { BasicdataFacade } from "../../Facades/Basicdata/BasicdataFacade.facade";
 import { CommonModule } from "@angular/common";
+import { TicketingAddTicketComponent } from "../ticketing-add-ticket/ticketing-add-ticket.component";
+import { SessionConfigComponent } from "../session-config/session-config.component";
+import { TicketingTicketComponent } from "../ticketing-ticket/ticketing-ticket.component";
 
 @Component({
     selector: 'app-ticketing-application',
@@ -12,7 +15,10 @@ import { CommonModule } from "@angular/common";
         CommonModule,
         TicketPoolComponent,
         TicketingLoginComponent,
-        TicketingNavbarComponent
+        TicketingNavbarComponent,
+        TicketingAddTicketComponent,
+        SessionConfigComponent,
+        TicketingTicketComponent
     ],
     templateUrl: './ticketing-application.component.html',
     standalone: true,

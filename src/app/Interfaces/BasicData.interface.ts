@@ -18,6 +18,26 @@ export enum pages {
 }
 
 export interface ticket {
+    tickedId: string;
     eventName: string;
     price: number;
+}
+
+export interface ticketReq {
+    eventName: string;
+    price: number;
+}
+
+export interface fieldInterface {
+    type: string;
+    label: string;
+    name: string;
+    setValue: (name: string, value: any) => void;
+}
+
+export interface sessionConfigInterface {
+    totalTickets: number;
+    ticketReleaseRate: number;
+    customerRetrievalRate: number;
+    maxTicketCapacity: number;
 }

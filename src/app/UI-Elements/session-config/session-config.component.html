@@ -1,0 +1,12 @@
+<h1>Session Configuration</h1>
+
+<div *ngIf="!isSessionActive">
+    <app-input
+        [fields]="sessionConfigFields"
+    ></app-input>
+    <button (click)="startSession()">Start session</button>
+</div>
+
+<div *ngIf="isSessionActive">
+    <button (click)="stopSession()">Stop session</button>
+</div>

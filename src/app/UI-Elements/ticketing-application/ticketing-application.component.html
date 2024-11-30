@@ -8,6 +8,9 @@
 
     <div class="pages">
         <app-ticketing-ticketpool *ngIf="currentPage == pageEnum.ticketPoolPage"></app-ticketing-ticketpool>
+        <app-ticketing-add-ticket *ngIf="currentPage == pageEnum.addTicketspage"></app-ticketing-add-ticket>
+        <app-session-config *ngIf="currentPage == pageEnum.configurationPage"></app-session-config>
+        <app-ticketing-ticket *ngIf="currentPage == pageEnum.ticketPage"></app-ticketing-ticket>
     </div>
 
 </div>

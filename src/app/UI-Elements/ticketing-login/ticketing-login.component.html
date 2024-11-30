@@ -1,8 +1,9 @@
 <h1>Welcome to the ticketing app!</h1>
 
 <div class="login-form">
-    <p>Username</p> <input type="text" name="username" id="" (input)="saveChanges($event)"/>
-    <p>Password</p> <input type="password" name="password" id="" (input)="saveChanges($event)"/> <br/>
+    <app-input
+        [fields]="loginFields"
+    ></app-input>
 </div>
 
 <div *ngIf="isLogin" class="login-buttons">

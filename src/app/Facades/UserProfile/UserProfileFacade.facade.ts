@@ -1,4 +1,5 @@
 import { UserProfile } from "../../Classes/UserProfile.class";
+import { fieldInterface } from "../../Interfaces/BasicData.interface";
 import { UserProfileImplementation } from "./UserProfileImplementation.implementation";
 
 
@@ -24,6 +25,31 @@ export class UserProfileFacade {
 
     public static getUser(): UserProfile | undefined {
         return this.impl.getUser();
+    }
+
+    public static getLoginFields(): fieldInterface[] {
+        let loginFields: fieldInterface[] = [];
+
+        const username: fieldInterface = {
+            name: "username",
+            label: "Username",
+            type: 'text',
+            setValue: (name: string, value: string) => {
+                UserProfileFacade.setUserDetails(name, value);
+            }
+        };
+
+        const password: fieldInterface = {
+            name: "password",
+            label: "Password",
+            type: 'password',
+            setValue: (name: string, value: string) => {
+                UserProfileFacade.setUserDetails(name, value);
+            }
+        };
+
+        loginFields = [username, password];
+        return loginFields;
     }
 
 }

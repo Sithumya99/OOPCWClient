@@ -5,6 +5,7 @@ import { CommunicationService } from "../../Services/CommunicationService.servic
 import { pages, userLoginRequest } from "../../Interfaces/BasicData.interface";
 import { CommandFacade } from "../Commands/CommandFacade.facade";
 import { UserProfileFacade } from "./UserProfileFacade.facade";
+import { SessionConfigFacade } from "../SessionConfig/SessionConfigFacade.facade";
 
 export class UserProfileImplementation {
     private authToken: string | undefined;
@@ -48,7 +49,8 @@ export class UserProfileImplementation {
                 async (result) => {
                     this.user = new UserProfile(result.username, result.role);
                     UserProfileFacade.setAuth(result.token);
-                    BasicdataFacade.loadTicketApp();
+                    SessionConfigFacade.setSessionConfigActive(result.sessionActive);
+                    BasicdataFacade.loadTicketApp(result.sessionActive);
                     resolve(result);
                     console.log(result);
                 },

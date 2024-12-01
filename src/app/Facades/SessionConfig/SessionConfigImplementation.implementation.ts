@@ -22,6 +22,7 @@ export class SessionConfigImplementation {
             CommunicationService.http.postFromTicketServer("startsession", session).subscribe(
                 async (response) => {
                     BasicdataFacade.setCustomerRetrievalRate(session.customerRetrievalRate);
+                    SessionConfigFacade.setSessionConfigActive(true);
                     resolve(response);
                 },
                 async (err: HttpErrorResponse) => {

@@ -91,25 +91,25 @@ export class SessionConfigFacade {
 
             switch(key) {
                 case 'totalTickets':
-                    if (this.sessionConfigDetails[key] > 60) {
+                    if (this.sessionConfigDetails[key] >= 60) {
                         ErrorMsgFacade.setErrorMsg("Total tickets must be less than 60");
                         return false;
                     }
                     break;
                 case 'ticketReleaseRate':
-                    if (this.sessionConfigDetails[key] > 60001) {
+                    if (this.sessionConfigDetails[key] >= 60001) {
                         ErrorMsgFacade.setErrorMsg("Tickets release rate must be less than 60001");
                         return false;
                     }
                     break;
                 case 'customerRetrievalRate':
-                    if (this.sessionConfigDetails[key] > 60001) {
+                    if (this.sessionConfigDetails[key] >= 60001) {
                         ErrorMsgFacade.setErrorMsg("Customer retrieval rate must be less than 60001");
                         return false;
                     }
                     break;
                 case 'maxTicketCapacity':
-                    if (this.sessionConfigDetails[key] > 100) {
+                    if (this.sessionConfigDetails[key] >= 100) {
                         ErrorMsgFacade.setErrorMsg("Max Capacity must be less than 100");
                         return false;
                     }

@@ -10,10 +10,6 @@ import { WebSocketFacade } from "../WebSocket/WebSocketFacade.facade";
 import { SessionConfigFacade } from "../SessionConfig/SessionConfigFacade.facade";
 import { ErrorMsgFacade } from "../ErrorMsg/ErrorMsgFacade.facade";
 
-@Injectable({
-    providedIn: 'root',
-})
-
 export class BasicdataFacade {
     private static impl: BasicdataImplementation = new BasicdataImplementation();
     private static newTicket: ticketReq;
@@ -90,6 +86,9 @@ export class BasicdataFacade {
     public static validateNewTicket(): boolean {
         if (this.newTicket.price < 0) {
             ErrorMsgFacade.setErrorMsg("Price of ticket cannot be negative");
+            return false;
+        } else if (this.newTicket.eventName == "") {
+            ErrorMsgFacade.setErrorMsg("Event name cannot be empty");
             return false;
         }
         return true;

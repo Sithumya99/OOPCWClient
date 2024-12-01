@@ -1,5 +1,6 @@
 import { UserProfile } from "../../Classes/UserProfile.class";
 import { fieldInterface } from "../../Interfaces/BasicData.interface";
+import { ErrorMsgFacade } from "../ErrorMsg/ErrorMsgFacade.facade";
 import { UserProfileImplementation } from "./UserProfileImplementation.implementation";
 
 
@@ -19,8 +20,20 @@ export class UserProfileFacade {
     }
 
     public static loginUser() {
-        console.log(this.impl.getUser());
-        this.impl.loginUser();
+        if (this.validateLogin()) {
+            this.impl.loginUser();
+        }
+    }
+
+    public static validateLogin(): boolean {
+        if (this.impl.getUserLoginDetails().username == "") {
+            ErrorMsgFacade.setErrorMsg("Username must be provided");
+            return false;
+        } else if (this.impl.getUserLoginDetails().password == "") {
+            ErrorMsgFacade.setErrorMsg("Password must be provided");
+            return false;
+        }
+        return true;
     }
 
     public static getUser(): UserProfile | undefined {
@@ -53,7 +66,9 @@ export class UserProfileFacade {
     }
 
     public static register(role: string) {
-        this.impl.registerUser(role);
+        if (this.validateLogin()) {
+            this.impl.registerUser(role);
+        }
     }
 
 }

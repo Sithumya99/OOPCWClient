@@ -85,7 +85,7 @@ export class SessionConfigFacade {
     public static validateConfig(): boolean {
         for (const key of Object.keys(this.sessionConfigDetails) as (keyof sessionConfigInterface)[]) {
             if (this.sessionConfigDetails[key] < 0) {
-                ErrorMsgFacade.setErrorMsg(`${key}` + "cannot be negative");
+                ErrorMsgFacade.setErrorMsg(`${key}` + " cannot be negative");
                 return false;
             }
 

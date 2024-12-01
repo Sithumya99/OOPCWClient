@@ -2,7 +2,7 @@
     <p>No active session, check back later.</p>
 </div>
 
-<div *ngIf="isSessionActive">
+<div *ngIf="isSessionActive" class="tickets">
     <div *ngFor="let ticket of tickets">
         <div class="ticket-container">
             <h1>{{ticket.eventName}}</h1>

@@ -21,6 +21,7 @@ export class TicketingTicketComponent {
         price: 0
     };
     currentTicket: Ticket | undefined;
+    waitingTime: number = 0;
 
     constructor() {
         BasicdataFacade.getCurrentTicket().subscribe((t) => {
@@ -33,6 +34,10 @@ export class TicketingTicketComponent {
                 };
             }
         });
+
+        BasicdataFacade.getWaitingTime().subscribe((time: number) => {
+            this.waitingTime = time;
+        });
     }
 
     buyTicket() {
@@ -40,6 +45,13 @@ export class TicketingTicketComponent {
     }
 
     showBuyTicket(): boolean {
-        return UserProfileFacade.getUser()!.role == "Customer";
+        if (UserProfileFacade.getUser()!.role == "Customer") {
+            if (this.waitingTime > 0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 }

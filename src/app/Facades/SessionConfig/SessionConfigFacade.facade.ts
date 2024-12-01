@@ -1,6 +1,7 @@
 import { Observable } from "rxjs";
 import { fieldInterface, sessionConfigInterface } from "../../Interfaces/BasicData.interface";
 import { SessionConfigImplementation } from "./SessionConfigImplementation.implementation";
+import { ErrorMsgFacade } from "../ErrorMsg/ErrorMsgFacade.facade";
 
 export class SessionConfigFacade {
     private static impl: SessionConfigImplementation = new SessionConfigImplementation();
@@ -72,10 +73,49 @@ export class SessionConfigFacade {
     }
 
     public static startSession() {
-        this.impl.startSession(this.sessionConfigDetails);
+        if (this.validateConfig()) {
+            this.impl.startSession(this.sessionConfigDetails);
+        }
     }
 
     public static stopSession() {
         this.impl.stopSession();
+    }
+
+    public static validateConfig(): boolean {
+        for (const key of Object.keys(this.sessionConfigDetails) as (keyof sessionConfigInterface)[]) {
+            if (this.sessionConfigDetails[key] < 0) {
+                ErrorMsgFacade.setErrorMsg(`${key}` + "cannot be negative");
+                return false;
+            }
+
+            switch(key) {
+                case 'totalTickets':
+                    if (this.sessionConfigDetails[key] > 60) {
+                        ErrorMsgFacade.setErrorMsg("Total tickets must be less than 60");
+                        return false;
+                    }
+                    break;
+                case 'ticketReleaseRate':
+                    if (this.sessionConfigDetails[key] > 60001) {
+                        ErrorMsgFacade.setErrorMsg("Tickets release rate must be less than 60001");
+                        return false;
+                    }
+                    break;
+                case 'customerRetrievalRate':
+                    if (this.sessionConfigDetails[key] > 60001) {
+                        ErrorMsgFacade.setErrorMsg("Customer retrieval rate must be less than 60001");
+                        return false;
+                    }
+                    break;
+                case 'maxTicketCapacity':
+                    if (this.sessionConfigDetails[key] > 100) {
+                        ErrorMsgFacade.setErrorMsg("Max Capacity must be less than 100");
+                        return false;
+                    }
+                    break;
+            }
+        }
+        return true;
     }
 }

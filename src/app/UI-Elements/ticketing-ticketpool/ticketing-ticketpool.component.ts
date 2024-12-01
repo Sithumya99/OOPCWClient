@@ -11,6 +11,7 @@ import { SessionConfigFacade } from "../../Facades/SessionConfig/SessionConfigFa
     standalone: true,
     imports: [CommonModule],
     templateUrl: './ticketing-ticketpool.component.html',
+    styleUrl: './ticketing-ticketpool.component.scss',
 })
 
 export class TicketPoolComponent {
@@ -30,11 +31,11 @@ export class TicketPoolComponent {
         WebSocketFacade.getWebSocketMessage().subscribe((message: string) => {
             if (message.toLocaleLowerCase() == "ticket_pool_changed" || message.toLocaleLowerCase() == "ticket_pool_start") {
                 console.log(message);
-                // BasicdataFacade.getTicketsFromServer();
+                BasicdataFacade.getTicketsFromServer();
             } else if (message.toLocaleLowerCase() == "ticket_pool_stop") {
                 console.log(message);
-                // SessionConfigFacade.setSessionConfigActive(false);
-                // BasicdataFacade.setTicketPool([]);
+                SessionConfigFacade.setSessionConfigActive(false);
+                BasicdataFacade.setTicketPool([]);
             }
         });
     }

@@ -52,4 +52,8 @@ export class UserProfileFacade {
         return loginFields;
     }
 
+    public static register(role: string) {
+        this.impl.registerUser(role);
+    }
+
 }

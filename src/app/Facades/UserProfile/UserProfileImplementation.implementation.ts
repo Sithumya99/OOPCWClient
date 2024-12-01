@@ -6,6 +6,8 @@ import { pages, userLoginRequest } from "../../Interfaces/BasicData.interface";
 import { CommandFacade } from "../Commands/CommandFacade.facade";
 import { UserProfileFacade } from "./UserProfileFacade.facade";
 import { SessionConfigFacade } from "../SessionConfig/SessionConfigFacade.facade";
+import { ErrorMsgFacade } from "../ErrorMsg/ErrorMsgFacade.facade";
+import { HttpErrorResponse } from "@angular/common/http";
 
 export class UserProfileImplementation {
     private authToken: string | undefined;
@@ -54,11 +56,32 @@ export class UserProfileImplementation {
                     resolve(result);
                     console.log(result);
                 },
-                async (err) => {
+                async (err: HttpErrorResponse) => {
+                    ErrorMsgFacade.setErrorMsg(err.error.message);
                     reject(err);
                     console.log(err);
                 }
             );
+        });
+    }
+
+    registerUser(role: string): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            CommunicationService.http.postFromTicketServer("register", {...this.userLoginDetails, role}).subscribe(
+                async (result) => {
+                    this.user = new UserProfile(result.username, result.role);
+                    UserProfileFacade.setAuth(result.token);
+                    SessionConfigFacade.setSessionConfigActive(result.sessionActive);
+                    BasicdataFacade.loadTicketApp(result.sessionActive);
+                    resolve(result);
+                    console.log(result);
+                },
+                async (err: HttpErrorResponse) => {
+                    ErrorMsgFacade.setErrorMsg(err.error.message);
+                    reject(err);
+                    console.log(err);
+                }
+            )
         });
     }
 }

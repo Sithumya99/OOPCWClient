@@ -1,16 +1,25 @@
-<app-ticketing-login *ngIf="currentPage == pageEnum.loginPage"></app-ticketing-login>
-
-<div class="ticket-app" *ngIf="currentPage !== pageEnum.loginPage">
-
-    <div class="nav">
-        <app-ticketing-navbar></app-ticketing-navbar>
+<div class="container">
+    <app-ticketing-login *ngIf="currentPage == pageEnum.loginPage"></app-ticketing-login>
+    
+    <div class="ticket-app" *ngIf="currentPage !== pageEnum.loginPage">
+    
+        <div class="nav">
+            <app-ticketing-navbar></app-ticketing-navbar>
+        </div>
+    
+        <div class="pages">
+            <app-ticketing-ticketpool *ngIf="currentPage == pageEnum.ticketPoolPage"></app-ticketing-ticketpool>
+            <app-ticketing-add-ticket *ngIf="currentPage == pageEnum.addTicketspage"></app-ticketing-add-ticket>
+            <app-session-config *ngIf="currentPage == pageEnum.configurationPage"></app-session-config>
+            <app-ticketing-ticket *ngIf="currentPage == pageEnum.ticketPage"></app-ticketing-ticket>
+        </div>
+    
     </div>
-
-    <div class="pages">
-        <app-ticketing-ticketpool *ngIf="currentPage == pageEnum.ticketPoolPage"></app-ticketing-ticketpool>
-        <app-ticketing-add-ticket *ngIf="currentPage == pageEnum.addTicketspage"></app-ticketing-add-ticket>
-        <app-session-config *ngIf="currentPage == pageEnum.configurationPage"></app-session-config>
-        <app-ticketing-ticket *ngIf="currentPage == pageEnum.ticketPage"></app-ticketing-ticket>
+    
+    <div *ngIf="showErrorDlg" class="error-dlg">
+        <app-error-dlg
+        [message]="errorMsg"
+        (closeDlg)="closeDialog($event)"
+        ></app-error-dlg>
     </div>
-
 </div>

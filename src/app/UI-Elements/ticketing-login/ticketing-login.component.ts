@@ -27,4 +27,16 @@ export class TicketingLoginComponent implements OnInit  {
   public loginUser() {
     UserProfileFacade.loginUser();
   }
+
+  registerCustomer() {
+    UserProfileFacade.register("Customer");
+  }
+
+  registerVendor() {
+    UserProfileFacade.register("Vendor");
+  }
+
+  registerAdmin() {
+    UserProfileFacade.register("Admin");
+  }
 }

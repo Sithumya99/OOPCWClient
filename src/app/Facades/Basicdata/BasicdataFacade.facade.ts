@@ -3,11 +3,12 @@ import { CommunicationService } from "../../Services/CommunicationService.servic
 import { BasicdataImplementation } from "./BasicdataImplementation.implementation";
 import { command, fieldInterface, pages, ticket, ticketReq } from "../../Interfaces/BasicData.interface";
 import { UserProfileFacade } from "../UserProfile/UserProfileFacade.facade";
-import { Observable } from "rxjs";
+import { interval, map, Observable, takeWhile } from "rxjs";
 import { CommandFacade } from "../Commands/CommandFacade.facade";
 import { Ticket } from "../../Classes/Ticket.class";
 import { WebSocketFacade } from "../WebSocket/WebSocketFacade.facade";
 import { SessionConfigFacade } from "../SessionConfig/SessionConfigFacade.facade";
+import { ErrorMsgFacade } from "../ErrorMsg/ErrorMsgFacade.facade";
 
 @Injectable({
     providedIn: 'root',
@@ -16,6 +17,7 @@ import { SessionConfigFacade } from "../SessionConfig/SessionConfigFacade.facade
 export class BasicdataFacade {
     private static impl: BasicdataImplementation = new BasicdataImplementation();
     private static newTicket: ticketReq;
+    private static customerRetrievalRate: number = 0;
 
     public static setCurrentPage(currentPage: pages) {
         this.impl.setCurrentPage(currentPage);
@@ -80,7 +82,17 @@ export class BasicdataFacade {
     }
 
     public static addTicket() {
-        this.impl.addTicket(this.newTicket);
+        if (this.validateNewTicket()) {
+            this.impl.addTicket(this.newTicket);
+        }
+    }
+
+    public static validateNewTicket(): boolean {
+        if (this.newTicket.price < 0) {
+            ErrorMsgFacade.setErrorMsg("Price of ticket cannot be negative");
+            return false;
+        }
+        return true;
     }
 
     public static buyTicket(ticket: Ticket) {
@@ -93,5 +105,30 @@ export class BasicdataFacade {
 
     public static setCurrentTicket(ticket: Ticket) {
         this.impl.setCurrentTicket(ticket);
+    }
+
+    public static setCustomerRetrievalRate(rate: number) {
+        BasicdataFacade.customerRetrievalRate = rate;
+    }
+
+    public static getCustomerRetrievalRate(): number {
+        return BasicdataFacade.customerRetrievalRate;
+    }
+
+    public static startCountDown() {
+        this.impl.setWaitingTime(this.customerRetrievalRate);
+
+        interval(1000).pipe(
+            takeWhile(() => this.impl.getWaitingTimeValue() > 0),
+            map(() => this.impl.getWaitingTimeValue() - 1000)
+        ).subscribe(
+            (remainingTime) => {
+                this.impl.setWaitingTime(Math.max(remainingTime, 0));
+            }
+        )
+    }
+
+    public static getWaitingTime(): Observable<number> {
+        return this.impl.getWaitingTime();
     }
 }

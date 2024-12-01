@@ -5,3 +5,7 @@
         <button (click)="buyTicket()">Buy Ticket</button>
     </div>
 </div>
+
+<div *ngIf="waitingTime > 0">
+    <p>Cannot buy a ticket again yet.</p>
+</div>

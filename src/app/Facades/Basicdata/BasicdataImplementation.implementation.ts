@@ -3,15 +3,31 @@ import { pages, ticket, ticketReq } from "../../Interfaces/BasicData.interface";
 import { CommunicationService } from "../../Services/CommunicationService.service";
 import { Ticket } from "../../Classes/Ticket.class";
 import { BasicdataFacade } from "./BasicdataFacade.facade";
+import { ErrorMsgFacade } from "../ErrorMsg/ErrorMsgFacade.facade";
+import { HttpErrorResponse } from "@angular/common/http";
+import { UserProfileFacade } from "../UserProfile/UserProfileFacade.facade";
 
 export class BasicdataImplementation {
 
     currentPage: BehaviorSubject<pages> =  new BehaviorSubject<pages>(pages.loginPage);
     ticketpool: BehaviorSubject<Ticket[]> = new BehaviorSubject<Ticket[]>([]);
-    currentTicket: BehaviorSubject<Ticket | undefined> = new BehaviorSubject<Ticket | undefined>(undefined); 
+    currentTicket: BehaviorSubject<Ticket | undefined> = new BehaviorSubject<Ticket | undefined>(undefined);
+    waitingTimeToBuy: BehaviorSubject<number> = new BehaviorSubject<number>(0);
     tickets: Ticket[] = [];
 
     constructor() {}
+
+    getWaitingTime(): Observable<number> {
+        return this.waitingTimeToBuy.asObservable();
+    }
+
+    getWaitingTimeValue(): number {
+        return this.waitingTimeToBuy.value;
+    }
+
+    setWaitingTime(time: number) {
+        this.waitingTimeToBuy.next(time);
+    }
 
     getCurrentPage(): Observable<pages> {
         return this.currentPage.asObservable();
@@ -58,7 +74,8 @@ export class BasicdataImplementation {
                     BasicdataFacade.setTickets(response);
                     resolve(response);
                 },
-                async (error) => {
+                async (error: HttpErrorResponse) => {
+                    ErrorMsgFacade.setErrorMsg(error.error.message);
                     reject(error);
                 }
             );
@@ -72,7 +89,8 @@ export class BasicdataImplementation {
                     BasicdataFacade.getTicketsFromServer();
                     resolve(response);
                 },
-                async (error) => {
+                async (error: HttpErrorResponse) => {
+                    ErrorMsgFacade.setErrorMsg(error.error.message);
                     reject(error);
                 }
             )
@@ -83,10 +101,13 @@ export class BasicdataImplementation {
         return new Promise<void>((resolve, reject) => {
             CommunicationService.http.postFromTicketServer("buyticket", ticket).subscribe(
                 async (response) => {
-                    console.log("ticket buy: success");
+                    if (UserProfileFacade.getUser()!.role == "Customer") {
+                        BasicdataFacade.startCountDown();
+                    }
                     resolve(response);
                 },
-                async (error) => {
+                async (error: HttpErrorResponse) => {
+                    ErrorMsgFacade.setErrorMsg(error.error.message);
                     reject(error);
                 }
             )

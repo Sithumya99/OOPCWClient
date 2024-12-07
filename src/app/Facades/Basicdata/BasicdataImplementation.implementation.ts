@@ -86,7 +86,7 @@ export class BasicdataImplementation {
         return new Promise<void>((resolve, reject) => {
             CommunicationService.http.postFromTicketServer("addticket", newTicket).subscribe(
                 async (response) => {
-                    BasicdataFacade.getTicketsFromServer();
+                    BasicdataFacade.resetTicket();
                     resolve(response);
                 },
                 async (error: HttpErrorResponse) => {

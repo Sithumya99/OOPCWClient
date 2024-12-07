@@ -130,4 +130,11 @@ export class BasicdataFacade {
     public static getWaitingTime(): Observable<number> {
         return this.impl.getWaitingTime();
     }
+
+    public static resetTicket(): void {
+        this.newTicket = {
+            eventName: "",
+            price: 0
+        };
+    }
 }

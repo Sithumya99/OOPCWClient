@@ -12,7 +12,10 @@ import { ErrorMsgFacade } from "../ErrorMsg/ErrorMsgFacade.facade";
 
 export class BasicdataFacade {
     private static impl: BasicdataImplementation = new BasicdataImplementation();
-    private static newTicket: ticketReq;
+    private static newTicket: ticketReq = {
+        eventName: "",
+        price: 0
+    };
     private static customerRetrievalRate: number = 0;
 
     public static setCurrentPage(currentPage: pages) {

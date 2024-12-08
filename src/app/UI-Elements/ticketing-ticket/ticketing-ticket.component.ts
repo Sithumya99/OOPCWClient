@@ -16,7 +16,7 @@ import { CommonModule } from "@angular/common";
 export class TicketingTicketComponent {
 
     ticket: ticket = {
-        tickedId: "",
+        id: "",
         eventName: "",
         price: 0
     };
@@ -28,7 +28,7 @@ export class TicketingTicketComponent {
             if (t !== undefined) {
                 this.currentTicket = t;
                 this.ticket = {
-                    tickedId: t.ticketId,
+                    id: t.ticketId,
                     eventName: t.eventName,
                     price: t.price
                 };

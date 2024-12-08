@@ -22,4 +22,11 @@
         (closeDlg)="closeDialog($event)"
         ></app-error-dlg>
     </div>
+
+    <div *ngIf="showInfoDlg" class="info-dlg">
+        <app-info-dlg
+        [message]="infoMsg"
+        (closeDlg)="closeDialog($event)"
+        ></app-info-dlg>
+    </div>
 </div>

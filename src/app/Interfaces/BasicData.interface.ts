@@ -18,7 +18,7 @@ export enum pages {
 }
 
 export interface ticket {
-    tickedId: string;
+    id: string;
     eventName: string;
     price: number;
 }

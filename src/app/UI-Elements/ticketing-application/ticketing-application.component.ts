@@ -10,6 +10,8 @@ import { SessionConfigComponent } from "../session-config/session-config.compone
 import { TicketingTicketComponent } from "../ticketing-ticket/ticketing-ticket.component";
 import { ErrorDlgComponent } from "../error-dlg/error-dlg.component";
 import { ErrorMsgFacade } from "../../Facades/ErrorMsg/ErrorMsgFacade.facade";
+import { InfoDlgComponent } from "../info-dlg/info-dlg.component";
+import { InfoMsgFacade } from "../../Facades/Basicdata/InfoMsg/InfoMsgFacade.facade";
 
 @Component({
     selector: 'app-ticketing-application',
@@ -21,7 +23,8 @@ import { ErrorMsgFacade } from "../../Facades/ErrorMsg/ErrorMsgFacade.facade";
         TicketingAddTicketComponent,
         SessionConfigComponent,
         TicketingTicketComponent,
-        ErrorDlgComponent
+        ErrorDlgComponent,
+        InfoDlgComponent
     ],
     templateUrl: './ticketing-application.component.html',
     standalone: true,
@@ -33,6 +36,8 @@ export class TicketingApplication {
     currentPage: pages = pages.loginPage;
     showErrorDlg: boolean = false;
     errorMsg: string = "";
+    showInfoDlg: boolean = false;
+    infoMsg: string = "";
 
     constructor() {
         BasicdataFacade.getCurrentPage().subscribe(
@@ -49,9 +54,19 @@ export class TicketingApplication {
                 }
             }
         );
+
+        InfoMsgFacade.getInfoMsg().subscribe(
+            (msg: string) => {
+                if (msg !== "") {
+                    this.showInfoDlg = true;
+                    this.infoMsg = msg;
+                }
+            }
+        );
     }
 
     closeDialog(event: boolean) {
         this.showErrorDlg = false;
+        this.showInfoDlg = false;
     }
 }

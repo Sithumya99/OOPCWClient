@@ -6,7 +6,7 @@ export class Ticket {
     price: number;
 
     constructor(ticket: ticket) {
-        this.ticketId = ticket.tickedId;
+        this.ticketId = ticket.id;
         this.eventName = ticket.eventName;
         this.price = ticket.price;
     }

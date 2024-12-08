@@ -6,6 +6,7 @@ import { BasicdataFacade } from "./BasicdataFacade.facade";
 import { ErrorMsgFacade } from "../ErrorMsg/ErrorMsgFacade.facade";
 import { HttpErrorResponse } from "@angular/common/http";
 import { UserProfileFacade } from "../UserProfile/UserProfileFacade.facade";
+import { InfoMsgFacade } from "./InfoMsg/InfoMsgFacade.facade";
 
 export class BasicdataImplementation {
 
@@ -87,6 +88,7 @@ export class BasicdataImplementation {
             CommunicationService.http.postFromTicketServer("addticket", newTicket).subscribe(
                 async (response) => {
                     BasicdataFacade.resetTicket();
+                    InfoMsgFacade.setInfoMsg("Ticket added successfully");
                     resolve(response);
                 },
                 async (error: HttpErrorResponse) => {
@@ -101,6 +103,7 @@ export class BasicdataImplementation {
         return new Promise<void>((resolve, reject) => {
             CommunicationService.http.postFromTicketServer("buyticket", ticket).subscribe(
                 async (response) => {
+                    InfoMsgFacade.setInfoMsg("Ticket bought successfully");
                     if (UserProfileFacade.getUser()!.role == "Customer") {
                         BasicdataFacade.startCountDown();
                     }

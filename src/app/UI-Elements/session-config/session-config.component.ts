@@ -18,6 +18,9 @@ export class SessionConfigComponent implements OnInit {
     constructor() {
         SessionConfigFacade.getSessionConfigActive().subscribe((isActive: boolean) => {
             this.isSessionActive = isActive;
+            if (!this.isSessionActive) {
+                this.sessionConfigFields = SessionConfigFacade.getSessionConfigFields();
+            }
         });
     }
 
